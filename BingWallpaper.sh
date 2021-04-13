@@ -12,9 +12,11 @@ findResult=$(find $localDir -regex $filenameRegex)
 if [ ! -n "$findResult" ]; then
     baseUrl="cn.bing.com"
     html=$(curl -L $baseUrl)
+    echo "${html}" > index.html
 
     imgurl=$(expr "$(echo "$html" | grep "&amp;rf")" : '.*href=\"\(\/th\?id=OHR\.[A-Za-z]*\_ZH\-CN[0-9]*\_1920x1080\.jpg\).*')
     echo $imgurl
+
     filename=$(expr "$imgurl" : '.*OHR\.\(.*\)')
     echo $filename
     localpath="$localDir/$(date "+%Y-%m-%d")-$filename"
